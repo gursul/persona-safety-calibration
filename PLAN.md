@@ -16,10 +16,11 @@ Status legend: [ ] todo · [~] in progress · [x] done
       `data/xstest/xstest_v2.csv` via `src/data_prep.py`
       (source: `natolambert/xstest-v2-copy` on HF Hub; `contrast_*` types
       = unsafe, all other types = safe — counts verified 250/200)
-- [ ] Finalize 5–6 persona system prompts in `personas/` (neutral baseline,
-      children's tutor, medical professional, cybersecurity professional,
-      creative fiction writer, + optional 6th) — roles/style only, no
-      explicit safety steering
+- [x] Finalize 6 persona system prompts in `personas/personas.yaml`:
+      neutral baseline, children's tutor, medical professional,
+      cybersecurity professional, creative fiction writer, customer
+      support agent — role/style only, no explicit safety steering;
+      length-matched (154-200 chars across non-neutral personas)
 
 ## Phase 2 — Generation
 - [ ] Build generation script: persona × XSTest prompt → model response

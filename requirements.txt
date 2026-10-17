@@ -1,5 +1,6 @@
 pandas
 numpy
+pyyaml
 scipy
 statsmodels
 scikit-learn
