@@ -23,10 +23,15 @@ Status legend: [ ] todo · [~] in progress · [x] done
       length-matched (154-200 chars across non-neutral personas)
 
 ## Phase 2 — Generation
-- [ ] Build generation script: persona × XSTest prompt → model response
-      (deterministic / low-temperature, 1 generation per condition)
-- [ ] Run full grid: 450 × 5(6) generations
+- [x] Build generation script: persona × XSTest prompt → model response
+      (temperature = 0, 1 generation per condition) — `src/generate.py`
+- [x] Small test run (2 prompts × 6 personas, incl. unsafe prompts) —
+      validated end to end: refusals on unsafe prompts across all
+      personas, compliance on safe prompts, persona style shows up
+      without breaking the refusal mechanism
+- [ ] Run full grid: 450 × 6 personas = 2700 generations
 - [ ] Store raw generations in `data/generations/` with persona + prompt_id + safety_label
+      (gitignored — regenerable via `src/generate.py`)
 
 ## Phase 3 — Judging
 - [ ] Implement LLM-as-judge with XSTest 3-way taxonomy (full compliance /
