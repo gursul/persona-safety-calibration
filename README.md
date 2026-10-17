@@ -8,12 +8,16 @@ Does prompting an instruction-tuned LLM to adopt a persona change its refusal
 behavior — not just the overall refusal rate, but its ability to tell apart
 genuinely unsafe requests from benign-but-scary-sounding ones?
 
-We evaluate a single fixed model (planned: Qwen2.5-7B-Instruct) on the
-[XSTest](https://github.com/paul-rottger/exaggerated-safety) benchmark (450
-prompts: 250 safe/benign, 200 unsafe) under 5–6 persona system prompts,
-classify each response with an LLM-as-judge into the XSTest three-way
+We evaluate a single fixed model, **Qwen2.5-7B-Instruct** (local, 4-bit via
+MLX), on the [XSTest](https://github.com/paul-rottger/exaggerated-safety)
+benchmark (450 prompts: 250 safe/benign, 200 unsafe) under 5–6 persona
+system prompts, classify each response with an LLM-as-judge
+(**Qwen2.5-32B-Instruct**, local, 4-bit via MLX) into the XSTest three-way
 taxonomy (full compliance / partial refusal / full refusal), and test for a
 persona × safety-label interaction via logistic regression.
+
+Everything runs locally on Apple Silicon (M3 Pro, 36GB RAM) via
+[MLX](https://github.com/ml-explore/mlx) — no API keys required.
 
 See [PLAN.md](PLAN.md) for the step-by-step execution plan and
 [docs/proposal.pdf](docs/proposal.pdf) for the original proposal.

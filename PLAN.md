@@ -4,13 +4,18 @@ Status legend: [ ] todo · [~] in progress · [x] done
 
 ## Phase 0 — Setup
 - [x] Create GitHub repo, local project scaffold
-- [ ] Pin model access (confirm Qwen2.5-7B-Instruct availability — local GPU / API / HF Inference)
-- [ ] Pick + pin LLM-as-judge model (should differ from the model under test)
-- [ ] `requirements.txt` / environment pinned
+- [x] Pin model access — local inference via MLX on M3 Pro / 36GB RAM
+      - Subject model: `mlx-community/Qwen2.5-7B-Instruct-4bit`
+      - Judge model: `mlx-community/Qwen2.5-32B-Instruct-4bit` (run
+        sequentially after generation, not concurrently with the 7B model)
+- [x] `requirements.txt` / environment pinned (mlx-lm, datasets, pandas,
+      statsmodels, etc.)
 
 ## Phase 1 — Data
-- [ ] Pull XSTest (450 prompts: 250 safe, 200 unsafe) into `data/xstest/`
-- [ ] Verify prompt categories / metadata match the published taxonomy
+- [x] Pull XSTest (450 prompts: 250 safe, 200 unsafe) into
+      `data/xstest/xstest_v2.csv` via `src/data_prep.py`
+      (source: `natolambert/xstest-v2-copy` on HF Hub; `contrast_*` types
+      = unsafe, all other types = safe — counts verified 250/200)
 - [ ] Finalize 5–6 persona system prompts in `personas/` (neutral baseline,
       children's tutor, medical professional, cybersecurity professional,
       creative fiction writer, + optional 6th) — roles/style only, no
@@ -45,6 +50,5 @@ Status legend: [ ] todo · [~] in progress · [x] done
 
 ## Open decisions
 - Exact persona wording (draft + freeze before generation to avoid re-runs)
-- Model hosting: local inference vs. API vs. HF endpoint
-- Judge model choice and prompt
+- Judge prompt wording / few-shot examples for the 3-way taxonomy
 - Significance threshold / correction for multiple persona comparisons
