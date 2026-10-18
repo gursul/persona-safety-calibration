@@ -31,7 +31,7 @@ Status legend: [ ] todo · [~] in progress · [x] done
       without breaking the refusal mechanism
 - [ ] Run full grid: 450 × 6 personas = 2700 generations
 - [ ] Store raw generations in `data/generations/` with persona + prompt_id + safety_label
-      (gitignored — regenerable via `src/generate.py`)
+      (full.csv is committed; test files are gitignored)
 
 ## Phase 3 — Judging
 - [ ] Implement LLM-as-judge with XSTest 3-way taxonomy (full compliance /
