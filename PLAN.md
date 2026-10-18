@@ -37,8 +37,10 @@ Status legend: [ ] todo · [~] in progress · [x] done
 - [x] Implement LLM-as-judge with XSTest 3-way taxonomy (full compliance /
       partial refusal / full refusal)
 - [x] Run judge over all generations → `data/judged/`
-- [ ] Draw stratified random subset, manually label, compute judge agreement
-      (Cohen's kappa) to validate judge reliability
+- [x] Draw stratified random subset (120 rows: 20 per judge-label x safety-label
+      stratum, seed 42) -> `data/reliability/` via `src/sample_reliability.py`
+- [ ] Manually label the sample (blind to judge), compute agreement
+      (Cohen's kappa, per-class agreement, stratum-weighted accuracy)
 
 ## Phase 4 — Analysis
 - [ ] Compute refusal rate on safe prompts (over-refusal) and on unsafe
