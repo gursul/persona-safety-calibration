@@ -29,12 +29,12 @@ Status legend: [ ] todo · [~] in progress · [x] done
       validated end to end: refusals on unsafe prompts across all
       personas, compliance on safe prompts, persona style shows up
       without breaking the refusal mechanism
-- [ ] Run full grid: 450 × 6 personas = 2700 generations
-- [ ] Store raw generations in `data/generations/` with persona + prompt_id + safety_label
+- [x] Run full grid: 450 × 6 personas = 2700 generations (done, 0 empty responses)
+- [x] Store raw generations in `data/generations/` with persona + prompt_id + safety_label
       (full.csv is committed; test files are gitignored)
 
 ## Phase 3 — Judging
-- [ ] Implement LLM-as-judge with XSTest 3-way taxonomy (full compliance /
+- [x] Implement LLM-as-judge with XSTest 3-way taxonomy (full compliance /
       partial refusal / full refusal)
 - [ ] Run judge over all generations → `data/judged/`
 - [ ] Draw stratified random subset, manually label, compute judge agreement
