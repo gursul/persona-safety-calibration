@@ -36,7 +36,7 @@ Status legend: [ ] todo · [~] in progress · [x] done
 ## Phase 3 — Judging
 - [x] Implement LLM-as-judge with XSTest 3-way taxonomy (full compliance /
       partial refusal / full refusal)
-- [ ] Run judge over all generations → `data/judged/`
+- [x] Run judge over all generations → `data/judged/`
 - [ ] Draw stratified random subset, manually label, compute judge agreement
       (Cohen's kappa) to validate judge reliability
 

@@ -6,5 +6,5 @@ venv/
 .ipynb_checkpoints/
 .DS_Store
 data/generations/test*.csv
-data/judged/
+data/judged/test*.csv
 *.log
