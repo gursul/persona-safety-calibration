@@ -39,8 +39,45 @@ Status legend: [ ] todo · [~] in progress · [x] done
 - [x] Run judge over all generations → `data/judged/`
 - [x] Draw stratified random subset (120 rows: 20 per judge-label x safety-label
       stratum, seed 42) -> `data/reliability/` via `src/sample_reliability.py`
-- [ ] Manually label the sample (blind to judge), compute agreement
-      (Cohen's kappa, per-class agreement, stratum-weighted accuracy)
+- [x] Manually label the sample (blind to judge), compute agreement
+      (Cohen's kappa, per-class agreement, stratum-weighted accuracy).
+      Rows 1-60 labeled by Arda and, independently, by Claude
+      (`data/reliability/`, rules in `docs/labeling_guide.md`).
+      Result: judge vs human 55% agreement, kappa 0.28; 14 of the judge's
+      15 partial refusals were wrong, so the judge is NOT usable as is.
+      Human vs Claude (first pass) agreement 95%, kappa 0.90.
+- [ ] Label rows 61-120 (held-out validation set), Arda + Claude
+
+## Phase 3b — Judge improvement loop (must finish before Phase 4)
+
+Goal: a judge whose labels are trustworthy enough for the analysis.
+Dev set = sample rows 1-60 (used to find error patterns). Validation set =
+rows 61-120 (labels fixed before any prompt work; used for go/no-go).
+
+Loop, each iteration:
+1. Revise the judge prompt (one or two changes at a time) and log the change
+   and the reason in the experiment journal.
+2. Run it on the dev set (about 8 min) and review the remaining errors.
+3. When the dev set looks good, run it on the validation set and record
+   agreement, kappa and the error patterns (P1-P4 in the journal).
+
+Stop conditions (proposed, adjust together):
+- Success: on the validation set agreement >= 90%, kappa >= 0.80, and no
+  single error pattern with more than 2 rows.
+- Limit: at most 4 prompt iterations (or the time budget agreed with Arda),
+  whichever comes first.
+- If the limit is hit without success, fall back in this order: (a) collapse
+  to a binary label (refusal of any kind vs full compliance) and re-check the
+  metrics; (b) combine the best prompt with calibration or an ensemble of two
+  prompts; (c) use the best prompt and report its measured error rates with a
+  sensitivity analysis (results with partial merged or dropped).
+
+After success:
+- [ ] Re-run the final judge on all 2700 rows (about 6.5 h; re-run the risky
+      subsets first if time is short).
+- [ ] Draw a fresh sample stratified by the NEW labels (about 60 rows), label it
+      blind, and report that agreement as the final judge-reliability number
+      (the validation set is no longer clean after tuning).
 
 ## Phase 4 — Analysis
 - [ ] Compute refusal rate on safe prompts (over-refusal) and on unsafe
@@ -58,5 +95,5 @@ Status legend: [ ] todo · [~] in progress · [x] done
 
 ## Open decisions
 - Exact persona wording (draft + freeze before generation to avoid re-runs)
-- Judge prompt wording / few-shot examples for the 3-way taxonomy
+- New judge prompt design (see Phase 3b); stop limits to confirm
 - Significance threshold / correction for multiple persona comparisons
