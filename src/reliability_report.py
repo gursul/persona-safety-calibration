@@ -50,6 +50,7 @@ def compare(name: str, df: pd.DataFrame, x: str, y: str) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--min-id", type=int, default=1)
     ap.add_argument("--max-id", type=int, default=60)
     ap.add_argument("--judge-file", default=None, help="CSV with sample_id and judge_label to evaluate instead of the original judge")
     ap.add_argument("--claude-col", default="claude_label", help="claude_label (first pass) or claude_label_final")
@@ -57,10 +58,14 @@ def main() -> None:
     args = ap.parse_args()
 
     key = pd.read_csv(ROOT / "sample_key.csv", keep_default_na=False)
-    sheet = pd.read_csv(ROOT / "annotation_sheet.csv", keep_default_na=False)[["sample_id", args.human_col, "notes"]].rename(columns={args.human_col: "human_label"})
+    if args.human_col.startswith("claude"):
+        sheet = pd.read_csv(ROOT / "claude_labels.csv", keep_default_na=False)[["sample_id", args.human_col]].rename(columns={args.human_col: "human_label"})
+        sheet["notes"] = ""
+    else:
+        sheet = pd.read_csv(ROOT / "annotation_sheet.csv", keep_default_na=False)[["sample_id", args.human_col, "notes"]].rename(columns={args.human_col: "human_label"})
     cl = pd.read_csv(ROOT / "claude_labels.csv", keep_default_na=False)[["sample_id", args.claude_col, "claude_note"]].rename(columns={args.claude_col: "claude_label"})
     df = key.merge(sheet, on="sample_id").merge(cl, on="sample_id", how="left").fillna("")
-    df = df[df.sample_id <= args.max_id].copy()
+    df = df[(df.sample_id >= args.min_id) & (df.sample_id <= args.max_id)].copy()
     df["stratum"] = df.judge_label + "|" + df.safety_label
     if args.judge_file:
         jf = pd.read_csv(args.judge_file, keep_default_na=False)[["sample_id", "judge_label"]].rename(columns={"judge_label": "new_judge"})

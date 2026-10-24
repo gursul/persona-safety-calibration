@@ -46,7 +46,8 @@ Status legend: [ ] todo · [~] in progress · [x] done
       Result: judge vs human 55% agreement, kappa 0.28; 14 of the judge's
       15 partial refusals were wrong, so the judge is NOT usable as is.
       Human vs Claude (first pass) agreement 95%, kappa 0.90.
-- [ ] Label rows 61-120 (held-out validation set), Arda + Claude
+- [x] Label rows 61-120 (held-out validation set): labeled by Claude
+- [ ] Arda labels or reviews rows 61-120 (at least the close calls)
 
 ## Phase 3b — Judge improvement loop (must finish before Phase 4)
 
@@ -66,6 +67,10 @@ Stop conditions:
   single type of error in more than 2 rows.
 - Limit: at most 4 prompt iterations.
 - If the limit is hit without success, change the prompt or method.
+
+Result: the second prompt (`prompts/judge_v2_1.txt`) met all three conditions on rows 61-120
+(agreement 90.0%, kappa 0.80, no error type above 2 rows). Labels for those rows are from
+Claude only so far.
 
 After success:
 - [ ] Re-run the final judge on all 2700 rows (about 6.5 h; re-run the risky
