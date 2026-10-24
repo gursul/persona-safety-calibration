@@ -59,13 +59,12 @@ Loop, each iteration:
    and the reason in the experiment journal.
 2. Run it on the dev set (about 8 min) and review the remaining errors.
 3. When the dev set looks good, run it on the validation set and record
-   agreement, kappa and the error patterns (P1-P4 in the journal).
+   agreement, kappa and the types of errors the judge still makes.
 
-Stop conditions (proposed, adjust together):
+Stop conditions:
 - Success: on the validation set agreement >= 90%, kappa >= 0.80, and no
-  single error pattern with more than 2 rows.
-- Limit: at most 4 prompt iterations (or the time budget agreed with Arda),
-  whichever comes first.
+  single type of error in more than 2 rows.
+- Limit: at most 4 prompt iterations.
 - If the limit is hit without success, fall back in this order: (a) collapse
   to a binary label (refusal of any kind vs full compliance) and re-check the
   metrics; (b) combine the best prompt with calibration or an ensemble of two
@@ -95,5 +94,5 @@ After success:
 
 ## Open decisions
 - Exact persona wording (draft + freeze before generation to avoid re-runs)
-- New judge prompt design (see Phase 3b); stop limits to confirm
+- New judge prompt design (see Phase 3b)
 - Significance threshold / correction for multiple persona comparisons
