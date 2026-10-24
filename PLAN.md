@@ -73,11 +73,10 @@ Result: the second prompt (`prompts/judge_v2_1.txt`) met all three conditions on
 Claude only so far.
 
 After success:
-- [ ] Re-run the final judge on all 2700 rows (about 6.5 h; re-run the risky
-      subsets first if time is short).
-- [ ] Draw a fresh sample stratified by the NEW labels (about 60 rows), label it
-      blind, and report that agreement as the final judge-reliability number
-      (the validation set is no longer clean after tuning).
+- [x] Re-run the final judge on all 2700 rows -> `data/judged/full_v2_1.csv`.
+- [x] Draw a fresh sample stratified by the NEW labels (62 rows, `data/reliability_final/`).
+- [ ] Label the fresh sample blind and report that agreement as the final
+      judge-reliability number (the validation set is no longer clean after tuning).
 
 ## Phase 4 — Analysis
 - [ ] Compute refusal rate on safe prompts (over-refusal) and on unsafe
