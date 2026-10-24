@@ -65,11 +65,7 @@ Stop conditions:
 - Success: on the validation set agreement >= 90%, kappa >= 0.80, and no
   single type of error in more than 2 rows.
 - Limit: at most 4 prompt iterations.
-- If the limit is hit without success, fall back in this order: (a) collapse
-  to a binary label (refusal of any kind vs full compliance) and re-check the
-  metrics; (b) combine the best prompt with calibration or an ensemble of two
-  prompts; (c) use the best prompt and report its measured error rates with a
-  sensitivity analysis (results with partial merged or dropped).
+- If the limit is hit without success, change the prompt or method.
 
 After success:
 - [ ] Re-run the final judge on all 2700 rows (about 6.5 h; re-run the risky
