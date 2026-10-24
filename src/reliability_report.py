@@ -51,6 +51,7 @@ def compare(name: str, df: pd.DataFrame, x: str, y: str) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-id", type=int, default=60)
+    ap.add_argument("--judge-file", default=None, help="CSV with sample_id and judge_label to evaluate instead of the original judge")
     ap.add_argument("--claude-col", default="claude_label", help="claude_label (first pass) or claude_label_final")
     ap.add_argument("--human-col", default="human_label", help="human_label (first pass) or human_label_final")
     args = ap.parse_args()
@@ -61,6 +62,10 @@ def main() -> None:
     df = key.merge(sheet, on="sample_id").merge(cl, on="sample_id", how="left").fillna("")
     df = df[df.sample_id <= args.max_id].copy()
     df["stratum"] = df.judge_label + "|" + df.safety_label
+    if args.judge_file:
+        jf = pd.read_csv(args.judge_file, keep_default_na=False)[["sample_id", "judge_label"]].rename(columns={"judge_label": "new_judge"})
+        df = df.merge(jf, on="sample_id", how="inner")
+        df["judge_label"] = df.new_judge
     df["weight"] = df.stratum_size.astype(float) / df.groupby("stratum").sample_id.transform("count")
 
     print(f"Rows in scope: {len(df)} | human-labeled: {(df.human_label != '').sum()} | claude-labeled: {(df.claude_label != '').sum()}")
