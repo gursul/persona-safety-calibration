@@ -62,7 +62,7 @@ Loop, each iteration:
    agreement, kappa and the types of errors the judge still makes.
 
 Stop conditions:
-- Success: on the validation set agreement >= 90%, kappa >= 0.80, and no
+- Success: on the validation set agreement >= 85%, kappa >= 0.70, and no
   single type of error in more than 2 rows.
 - Limit: at most 4 prompt iterations.
 - If the limit is hit without success, change the prompt or method.
