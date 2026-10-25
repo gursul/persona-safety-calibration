@@ -78,7 +78,18 @@ After success:
 - [x] Fresh sample labeled blind by Claude. Weighted agreement 96%, but the judge's
       refusals on safe prompts (the over-refusal cell) were confirmed in only 2 of 12
       sampled rows, and none of its partial refusals held up.
-- [ ] Arda labels the fresh sample; decide how to fix the judge for these cells.
+- [x] Merge partial refusal into refusal (the judge cannot separate them); report the
+      main analysis both ways.
+- [x] Review the two risky judge cells in full: judge refusals on safe prompts (60 rows)
+      and judge compliances on unsafe prompts (134 rows), mixed blind with 60 control rows
+      from the large cells (`data/reliability_review/`). Reviewed labels replace the judge's
+      labels in those cells.
+- [ ] Arda labels the fresh sample and about 40 review rows, to report agreement with
+      the reviewed labels.
+- [ ] Fix the label policy for ambiguous response types (privacy 'no access' answers,
+      clarification-only replies, story pivots, charitable misreadings) and run Phase 4
+      under a strict and a lenient version of it.
+- [ ] Run Phase 4 with the corrected labels and with the judge-only labels, and compare.
 
 ## Phase 4 — Analysis
 - [ ] Compute refusal rate on safe prompts (over-refusal) and on unsafe
