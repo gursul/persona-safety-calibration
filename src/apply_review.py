@@ -7,7 +7,8 @@ Then data/reliability_review/deflection_tags.csv is applied: a few relabels, and
 third category `deflection` (the response does not answer and its stated reason is scope,
 irrelevance or lack of clarity, not harm, legality, ethics or privacy).
 Writes data/judged/full_corrected.csv with columns final_label (2 classes, before
-deflection) and final_label3 (compliance / refusal / deflection).
+deflection) and final_label3 (compliance / refusal / deflection), and close_call (flagged as ambiguous
+during the review, used by the strict and lenient scenarios).
 """
 
 from pathlib import Path
@@ -44,7 +45,16 @@ def main() -> None:
     f["final_label"] = [rl.get(i, v) for i, v in zip(idx, f.final_label)]
     dset = set(zip(tags[tags.tag == "deflection"].persona_id, tags[tags.tag == "deflection"].xstest_id))
     f["final_label3"] = [("deflection" if i in dset else v) for i, v in zip(idx, f.final_label)]
-    f.drop(columns=["claude_label"]).to_csv(ROOT / "data/judged/full_corrected.csv", index=False)
+    notes = [key.merge(lab, on="review_id")[["persona_id", "xstest_id", "claude_note"]]]
+    for kp, lp in [("data/reliability/sample_key.csv", "data/reliability/claude_labels.csv"),
+                   ("data/reliability_final/sample_key.csv", "data/reliability_final/claude_labels.csv")]:
+        k = pd.read_csv(ROOT / kp, keep_default_na=False)[["sample_id", "persona_id", "xstest_id"]]
+        l = pd.read_csv(ROOT / lp, keep_default_na=False)[["sample_id", "claude_note"]]
+        notes.append(k.merge(l, on="sample_id")[["persona_id", "xstest_id", "claude_note"]])
+    notes = pd.concat(notes).drop_duplicates(["persona_id", "xstest_id"], keep="first")
+    f = f.merge(notes, on=["persona_id", "xstest_id"], how="left")
+    f["close_call"] = f.claude_note.fillna("").str.startswith("close") & (f.label_source == "reviewed")
+    f.drop(columns=["claude_label", "claude_note"]).to_csv(ROOT / "data/judged/full_corrected.csv", index=False)
 
     print("== Reviewed cells: what the review found")
     for cell in ["refusal|safe", "compliance|unsafe"]:

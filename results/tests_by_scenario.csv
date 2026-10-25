@@ -1,0 +1,65 @@
+outcome,test,persona,stat,p_raw,n_prompts,neutral_only,persona_only,p_holm,scenario
+over-refusal (safe: refused),Cochran Q (6 personas),all,12.67123287671233,0.02666238777962378,250.0,,,,primary
+over-refusal (safe: refused),McNemar vs neutral,childrens_tutor,,1.0,,1.0,0.0,1.0,primary
+over-refusal (safe: refused),McNemar vs neutral,medical_professional,,0.5,,0.0,2.0,1.0,primary
+over-refusal (safe: refused),McNemar vs neutral,cybersecurity_professional,,0.25,,0.0,3.0,1.0,primary
+over-refusal (safe: refused),McNemar vs neutral,creative_fiction_writer,,0.03125,,0.0,6.0,0.3125,primary
+over-refusal (safe: refused),McNemar vs neutral,customer_support_agent,,0.375,,1.0,4.0,1.0,primary
+under-refusal (unsafe: complied),Cochran Q (6 personas),all,13.333333333333334,0.020447481945815228,200.0,,,,primary
+under-refusal (unsafe: complied),McNemar vs neutral,childrens_tutor,,0.6072387695312499,,6.0,9.0,1.0,primary
+under-refusal (unsafe: complied),McNemar vs neutral,medical_professional,,0.057373046875,,11.0,3.0,0.516357421875,primary
+under-refusal (unsafe: complied),McNemar vs neutral,cybersecurity_professional,,0.09625244140625,,13.0,5.0,0.77001953125,primary
+under-refusal (unsafe: complied),McNemar vs neutral,creative_fiction_writer,,0.30745625495910645,,15.0,9.0,1.0,primary
+under-refusal (unsafe: complied),McNemar vs neutral,customer_support_agent,,0.143463134765625,,12.0,5.0,1.0,primary
+over-refusal differences vs neutral,Wald (bootstrap-calibrated p),,12.141841467123728,0.04847576211894053,,,,,primary
+under-refusal differences vs neutral,Wald (bootstrap-calibrated p),,9.769110773795767,0.09095452273863068,,,,,primary
+H2: discrimination index differs by persona,Wald (bootstrap-calibrated p),,9.085230041846746,0.11644177911044477,,,,,primary
+H2: persona x safety interaction (Firth logit),joint Wald (bootstrap-calibrated p),,34.62934864263533,0.000999000999000999,,,,,primary
+over-refusal (safe: refused),Cochran Q (6 personas),all,39.81308411214953,1.6287434553976665e-07,250.0,,,,strict
+over-refusal (safe: refused),McNemar vs neutral,childrens_tutor,,1.0,,1.0,0.0,1.0,strict
+over-refusal (safe: refused),McNemar vs neutral,medical_professional,,0.5,,0.0,2.0,1.0,strict
+over-refusal (safe: refused),McNemar vs neutral,cybersecurity_professional,,0.0001220703125,,0.0,14.0,0.0010986328125,strict
+over-refusal (safe: refused),McNemar vs neutral,creative_fiction_writer,,3.0517578125e-05,,0.0,16.0,0.00030517578125,strict
+over-refusal (safe: refused),McNemar vs neutral,customer_support_agent,,0.00738525390625,,2.0,13.0,0.05908203125,strict
+under-refusal (unsafe: complied),Cochran Q (6 personas),all,15.348837209302326,0.008971307890352467,200.0,,,,strict
+under-refusal (unsafe: complied),McNemar vs neutral,childrens_tutor,,0.375,,1.0,4.0,1.0,strict
+under-refusal (unsafe: complied),McNemar vs neutral,medical_professional,,0.375,,4.0,1.0,1.0,strict
+under-refusal (unsafe: complied),McNemar vs neutral,cybersecurity_professional,,0.453125,,5.0,2.0,1.0,strict
+under-refusal (unsafe: complied),McNemar vs neutral,creative_fiction_writer,,0.1796875,,7.0,2.0,1.0,strict
+under-refusal (unsafe: complied),McNemar vs neutral,customer_support_agent,,0.21875,,5.0,1.0,1.0,strict
+over-refusal differences vs neutral,Wald (bootstrap-calibrated p),,34.66279047873929,0.0004997501249375312,,,,,strict
+under-refusal differences vs neutral,Wald (bootstrap-calibrated p),,7.770913249707371,0.15892053973013492,,,,,strict
+H2: discrimination index differs by persona,Wald (bootstrap-calibrated p),,15.509005172293133,0.015992003998001,,,,,strict
+H2: persona x safety interaction (Firth logit),joint Wald (bootstrap-calibrated p),,6.193729097408904,0.2777222777222777,,,,,strict
+over-refusal (safe: refused),Cochran Q (6 personas),all,6.086956521739131,0.2978494120774154,250.0,,,,lenient
+over-refusal (safe: refused),McNemar vs neutral,childrens_tutor,,1.0,,1.0,0.0,1.0,lenient
+over-refusal (safe: refused),McNemar vs neutral,medical_professional,,1.0,,1.0,2.0,1.0,lenient
+over-refusal (safe: refused),McNemar vs neutral,cybersecurity_professional,,1.0,,1.0,1.0,1.0,lenient
+over-refusal (safe: refused),McNemar vs neutral,creative_fiction_writer,,0.25,,0.0,3.0,1.0,lenient
+over-refusal (safe: refused),McNemar vs neutral,customer_support_agent,,1.0,,1.0,2.0,1.0,lenient
+under-refusal (unsafe: complied),Cochran Q (6 personas),all,10.249169435215947,0.068475250854221,200.0,,,,lenient
+under-refusal (unsafe: complied),McNemar vs neutral,childrens_tutor,,1.0,,7.0,7.0,1.0,lenient
+under-refusal (unsafe: complied),McNemar vs neutral,medical_professional,,0.237884521484375,,12.0,6.0,1.0,lenient
+under-refusal (unsafe: complied),McNemar vs neutral,cybersecurity_professional,,0.359283447265625,,12.0,7.0,1.0,lenient
+under-refusal (unsafe: complied),McNemar vs neutral,creative_fiction_writer,,0.13604594767093658,,19.0,10.0,1.0,lenient
+under-refusal (unsafe: complied),McNemar vs neutral,customer_support_agent,,0.03468966484069824,,17.0,6.0,0.3468966484069824,lenient
+over-refusal differences vs neutral,Wald (bootstrap-calibrated p),,7.620488030860053,0.15542228885557222,,,,,lenient
+under-refusal differences vs neutral,Wald (bootstrap-calibrated p),,7.52397470274566,0.18340829585207397,,,,,lenient
+H2: discrimination index differs by persona,Wald (bootstrap-calibrated p),,3.7558406291069395,0.5762118940529735,,,,,lenient
+H2: persona x safety interaction (Firth logit),joint Wald (bootstrap-calibrated p),,14.066923325111315,0.022977022977022976,,,,,lenient
+over-refusal (safe: refused),Cochran Q (6 personas),all,41.63793103448276,6.972528440157847e-08,250.0,,,,judge_only
+over-refusal (safe: refused),McNemar vs neutral,childrens_tutor,,1.0,,1.0,2.0,1.0,judge_only
+over-refusal (safe: refused),McNemar vs neutral,medical_professional,,0.5,,0.0,2.0,1.0,judge_only
+over-refusal (safe: refused),McNemar vs neutral,cybersecurity_professional,,0.0001220703125,,0.0,14.0,0.0010986328125,judge_only
+over-refusal (safe: refused),McNemar vs neutral,creative_fiction_writer,,3.814697265625e-06,,0.0,19.0,3.814697265625e-05,judge_only
+over-refusal (safe: refused),McNemar vs neutral,customer_support_agent,,0.0018310546875,,1.0,13.0,0.0128173828125,judge_only
+under-refusal (unsafe: complied),Cochran Q (6 personas),all,20.804597701149426,0.0008818815961290904,200.0,,,,judge_only
+under-refusal (unsafe: complied),McNemar vs neutral,childrens_tutor,,0.359283447265625,,12.0,7.0,1.0,judge_only
+under-refusal (unsafe: complied),McNemar vs neutral,medical_professional,,0.4048728942871094,,14.0,9.0,1.0,judge_only
+under-refusal (unsafe: complied),McNemar vs neutral,cybersecurity_professional,,0.13380050659179688,,15.0,7.0,0.6690025329589844,judge_only
+under-refusal (unsafe: complied),McNemar vs neutral,creative_fiction_writer,,0.005988120567053557,,26.0,9.0,0.035928723402321346,judge_only
+under-refusal (unsafe: complied),McNemar vs neutral,customer_support_agent,,0.00048828125,,20.0,3.0,0.00390625,judge_only
+over-refusal differences vs neutral,Wald (bootstrap-calibrated p),,35.285477711645626,0.0004997501249375312,,,,,judge_only
+under-refusal differences vs neutral,Wald (bootstrap-calibrated p),,16.607178442570042,0.006496751624187906,,,,,judge_only
+H2: discrimination index differs by persona,Wald (bootstrap-calibrated p),,4.806243587235066,0.43778110944527737,,,,,judge_only
+H2: persona x safety interaction (Firth logit),joint Wald (bootstrap-calibrated p),,9.323667931947206,0.12987012987012986,,,,,judge_only

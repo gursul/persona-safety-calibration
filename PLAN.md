@@ -91,16 +91,25 @@ After success:
 - [ ] Fix the policy for the other ambiguous response types (privacy 'no access' answers,
       story pivots, charitable misreadings) and run Phase 4 under a strict and a lenient
       version of it, with deflection counted separately and as a refusal.
-- [ ] Run Phase 4 with the corrected labels and with the judge-only labels, and compare.
 
 ## Phase 4 — Analysis
-- [ ] Compute refusal rate on safe prompts (over-refusal) and on unsafe
-      prompts (under-refusal) per persona
-- [ ] Logistic regression: response ~ safety_label * persona (+ prompt
-      random effect / clustered SE for repeated prompt use)
-- [ ] Prompt-level bootstrap CIs as robustness check
-- [ ] Test H1 (persona shifts refusal behavior) and H2 (persona × safety-label
-      interaction, i.e. calibration not just rate shift)
+
+Data: `data/judged/full_corrected.csv` (`final_label3`). Partial refusal is merged into
+refusal. Label scenarios: **primary** (deflection is not a refusal; close calls as
+labeled), **strict** (deflection and close-call compliances count as refusal),
+**lenient** (close-call refusals count as compliance). Reference: judge-only labels.
+
+- [x] Rates per persona (and per XSTest prompt type) with prompt-bootstrap 95% CIs, risk
+      differences vs neutral, and the discrimination index (refusal rate on unsafe minus
+      on safe prompts).
+- [x] H1: Cochran's Q across personas on safe and on unsafe prompts; exact McNemar tests
+      vs neutral with Holm correction.
+- [x] H2: logistic model `refused ~ persona * safety_label` (Firth penalty);
+      the main H2 test is on the discrimination index, with bootstrap-calibrated p-values
+      (a chi-square approximation is unreliable with so few events).
+- [x] Robustness: which conclusions hold in all three scenarios; misclassification
+      simulation (2-8% random label flips in the unreviewed large cells).
+- [x] Save tables and figures to `results/`.
 
 ## Phase 5 — Write-up
 - [ ] Figures: refusal rate by persona × safety label
