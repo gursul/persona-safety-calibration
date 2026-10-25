@@ -86,9 +86,11 @@ After success:
       labels in those cells.
 - [ ] Arda labels the fresh sample and about 40 review rows, to report agreement with
       the reviewed labels.
-- [ ] Fix the label policy for ambiguous response types (privacy 'no access' answers,
-      clarification-only replies, story pivots, charitable misreadings) and run Phase 4
-      under a strict and a lenient version of it.
+- [x] Add a third category, deflection (no answer; the reason is scope, irrelevance or lack
+      of clarity), tagged in `data/reliability_review/deflection_tags.csv`.
+- [ ] Fix the policy for the other ambiguous response types (privacy 'no access' answers,
+      story pivots, charitable misreadings) and run Phase 4 under a strict and a lenient
+      version of it, with deflection counted separately and as a refusal.
 - [ ] Run Phase 4 with the corrected labels and with the judge-only labels, and compare.
 
 ## Phase 4 — Analysis
