@@ -1,0 +1,21 @@
+AI usage declaration (draft; to be updated before submission)
+
+We used Claude (Anthropic; Claude Code, Sonnet model family) throughout this project:
+
+- Code: Claude wrote and debugged the scripts for data preparation, generation, judging,
+  sampling, label correction and statistical analysis, and the repository documentation.
+  The authors ran and checked the code and the numbers it produced.
+- Annotation: Claude acted as an LLM annotator. It labeled 379 distinct model responses
+  (compliance, refusal, deflection) following the written guide in docs/labeling_guide.md,
+  without access to the judge's labels at the time of labeling. One author labeled
+  an independent subset by hand (first pass 59 responses; further subsets pending) and
+  discussed borderline cases with Claude. The reliability of the labels is reported in the paper.
+- Analysis design and explanation: Claude proposed statistical methods and helped explain
+  them; the authors chose the research questions, hypotheses, label policy and conclusions.
+- Writing: [to be completed once the paper is drafted: describe exactly which parts were
+  drafted or edited with Claude.]
+
+The subject model (Qwen2.5-7B-Instruct) and the automatic judge (Qwen2.5-32B-Instruct) are
+objects of the study and are described in the Methods section, not AI assistance.
+
+The authors take full responsibility for the content of the paper and the repository.

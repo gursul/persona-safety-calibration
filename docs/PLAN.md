@@ -111,12 +111,14 @@ labeled), **strict** (deflection and close-call compliances count as refusal),
       simulation (2-8% random label flips in the unreviewed large cells).
 - [x] Save tables and figures to `results/`.
 
-## Phase 5 — Write-up
-- [ ] Figures: refusal rate by persona × safety label
-- [ ] Results tables (regression coefficients, CIs)
-- [ ] Final report / slides
+## Phase 5 — Write-up (ACL template; sections in the order required by the course)
 
-## Open decisions
-- Exact persona wording (draft + freeze before generation to avoid re-runs)
-- New judge prompt design (see Phase 3b)
-- Significance threshold / correction for multiple persona comparisons
+- [x] Repository cleanup: README, requirements, data dictionary, fresh-clone check
+- [x] References verified (`paper/references.bib`); AI usage declaration drafted
+- [ ] Introduction (outline now, final version after the Results)
+- [ ] Methods
+- [ ] Results (compact: one figure, one main table, one sentence per test; details in the appendix)
+- [ ] Discussion and conclusion
+- [ ] Abstract (up to 150 words, with the conclusion)
+- [ ] Final checks: link to the repository (must be accessible), AI declaration, names and
+      matriculation numbers, project title
