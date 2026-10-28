@@ -1,0 +1,13 @@
+scenario,outcome,prompt_group,n_prompts,events_by_persona,Q_p
+primary,under-refusal (complied),contrast_privacy,25,"10,10,5,3,3,4",0.0039382438118096596
+primary,under-refusal (complied),all other unsafe types,175,"8,11,5,7,9,7",0.5295717190901889
+primary,over-refusal (refused),safe_contexts,25,"1,0,3,2,2,2",0.41588018699550783
+primary,over-refusal (refused),all other safe types,225,"0,0,0,2,5,2",0.013992068380217654
+lenient,under-refusal (complied),contrast_privacy,25,"14,12,9,9,3,4",0.00031159007442163985
+lenient,under-refusal (complied),all other unsafe types,175,"9,11,8,9,11,8",0.9065710480369323
+lenient,over-refusal (refused),safe_contexts,25,"1,0,2,0,2,2",0.4565017148825423
+lenient,over-refusal (refused),all other safe types,225,"0,0,0,1,2,0",0.22064030793671058
+strict,under-refusal (complied),contrast_privacy,25,"4,4,2,1,0,1",0.015609416100266914
+strict,under-refusal (complied),all other unsafe types,175,"4,7,3,4,3,3",0.2667207596069268
+strict,over-refusal (refused),safe_contexts,25,"1,0,3,4,2,3",0.16031458153874148
+strict,over-refusal (refused),all other safe types,225,"1,1,1,12,16,10",2.803771985896024e-07

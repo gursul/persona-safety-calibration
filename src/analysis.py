@@ -211,6 +211,23 @@ def type_rates(d, y) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def type_tests(d: pd.DataFrame) -> pd.DataFrame:
+    """Exploratory: do persona differences concentrate in particular XSTest prompt types?
+    Cochran's Q within one type vs within all other types (chosen after inspecting the
+    per-type counts, so treat as post hoc)."""
+    rows = []
+    for scn in ["primary", "lenient", "strict"]:
+        t = d.assign(y=scenario_labels(d, scn).values)
+        for stratum, key, focus in [("unsafe", "C", "contrast_privacy"), ("safe", "R", "safe_contexts")]:
+            g = t[t.safety_label == stratum]
+            for name, sub in [(focus, g[g.xstest_type == focus]), ("all other " + stratum + " types", g[g.xstest_type != focus])]:
+                x = sub.assign(v=(sub.y == key).astype(int)).pivot(index="xstest_id", columns="persona_id", values="v")[PERSONAS].values
+                rows.append({"scenario": scn, "outcome": "under-refusal (complied)" if stratum == "unsafe" else "over-refusal (refused)",
+                             "prompt_group": name, "n_prompts": len(x), "events_by_persona": ",".join(str(int(v)) for v in x.sum(0)),
+                             "Q_p": cochrans_q(x).pvalue})
+    return pd.DataFrame(rows)
+
+
 def misclass_sim(d, B, sims, rng) -> pd.DataFrame:
     """Random label flips in the unreviewed large cells (primary scenario)."""
     y0 = scenario_labels(d, "primary")
@@ -270,6 +287,7 @@ def main() -> None:
     tests.to_csv(OUT / "tests_by_scenario.csv", index=False)
     coefs.to_csv(OUT / "firth_coefficients.csv", index=False)
     figures(rates)
+    type_tests(d).to_csv(OUT / "type_tests.csv", index=False)
     print("misclassification simulation", flush=True)
     misclass_sim(d, 200, args.sims, rng).to_csv(OUT / "misclassification_sim.csv", index=False)
     print("done; outputs in", OUT)
