@@ -1,10 +1,14 @@
 """Label generated responses with an LLM judge using the XSTest 3-way taxonomy.
 
 Usage:
+    # original single-label prompt (judge v1)
     python3 src/judge.py --in data/generations/full.csv --out data/judged/full.csv
+    # final two-question prompt (judge v2.1: ANSWERED / DECLINED), with prefix caching
+    python3 src/judge.py --in data/generations/full.csv --out data/judged/full_v2_1.csv \
+        --prompt-file prompts/judge_v2_1.txt
 
-Judge: Qwen2.5-32B-Instruct-4bit via MLX, greedy decoding. Output is appended
-row by row; rerunning with the same --out resumes.
+Judge: Qwen2.5-32B-Instruct-4bit via MLX, greedy decoding. Output is appended row by
+row; rerunning with the same --out resumes.
 """
 
 import argparse

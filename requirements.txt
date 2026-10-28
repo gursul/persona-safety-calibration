@@ -1,11 +1,12 @@
-pandas
-numpy
+# Generation and judging (Apple Silicon only; run the analysis on any machine without this line)
+mlx-lm>=0.20
+datasets>=2.18
+huggingface_hub
+
+# Analysis
+pandas>=2.0
+numpy>=1.26
+scipy>=1.11
+statsmodels>=0.14
+matplotlib>=3.8
 pyyaml
-scipy
-statsmodels
-scikit-learn
-matplotlib
-transformers
-torch
-datasets
-tqdm

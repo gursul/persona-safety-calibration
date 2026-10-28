@@ -8,3 +8,5 @@ venv/
 data/generations/test*.csv
 data/judged/test*.csv
 *.log
+data/xstest/
+data/reliability/disagreements.csv
