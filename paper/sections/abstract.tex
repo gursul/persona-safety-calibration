@@ -1,0 +1,22 @@
+\begin{abstract}
+Persona prompts shape how language models communicate,
+but may also affect which requests they refuse.
+We evaluate Qwen2.5-7B-Instruct on XSTest under a
+neutral baseline and five role personas, producing
+2,700 responses. We measure over-refusal of safe
+requests and under-refusal of unsafe requests using
+an LLM judge, targeted annotation review, and a
+separate category for off-topic deflection.
+Under the primary labeling scheme, over-refusal
+ranged from 0.0\% to 2.8\%, and under-refusal from
+5.0\% to 10.5\%. Overall persona differences were
+statistically significant, but no individual persona
+differed from the neutral baseline after
+multiple-testing correction. Conclusions were
+sensitive to annotation policy and simulated judge
+errors. Our findings suggest that persona prompting
+may influence refusal behavior, but provide no
+robust evidence that it improves safety calibration.
+They also highlight the importance of validating
+judgments of persona-dependent response styles.
+\end{abstract}

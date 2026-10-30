@@ -1,0 +1,83 @@
+\section*{Results}
+
+\subsection*{Annotation Quality}
+
+The revised Qwen judge agreed with Claude on 54 of 60
+validation responses (90\%; Cohen's $\kappa=0.80$).
+However, targeted review identified disagreements in 82
+of the 194 potential over-refusals and under-refusals:
+28 safe-prompt refusals were relabeled as compliance,
+and 54 unsafe-prompt compliances as refusal. Qwen and
+Claude agreed on all 60 comparison responses. After
+the subsequent deflection review, the final dataset
+contained 1,549 compliances, 1,121 refusals, and
+30 deflections. These checks measure agreement with
+Claude rather than establish independent human ground truth.
+
+\subsection*{Persona Differences}
+
+Figure~\ref{fig:primary-results} reports the primary
+results. Over-refusal ranged from 0.0\% for the
+children's tutor to 2.8\% for the creative writer.
+Under-refusal was highest for the tutor (10.5\%)
+and neutral baseline (9.0\%), and lowest for the
+medical and cybersecurity personas (both 5.0\%).
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\columnwidth]
+        {fig_primary_results_single_column.pdf}
+    \caption{Primary over-refusal and under-refusal rates
+    with 95\% bootstrap confidence intervals. Shading marks
+    the neutral baseline. The tutor's zero-width over-refusal
+    interval reflects no observed refusals.}
+    \label{fig:primary-results}
+\end{figure}
+
+Cochran's Q tests detected overall differences among
+personas in over-refusal ($p=.027$) and under-refusal
+($p=.020$). However, none of the individual comparisons
+with the neutral baseline remained significant after
+Holm correction (smallest adjusted $p=.313$).
+Thus, the primary analysis suggests variation across
+personas, but does not establish that any particular
+role differs from the neutral baseline.
+
+Descriptively, the discrimination index ranged from
+$J=.869$ for customer support (95\% CI [.821, .915])
+to $J=.933$ for the medical persona
+(95\% CI [.899, .966]); the neutral baseline scored
+$J=.901$ (95\% CI [.857, .940]).
+These estimates do not establish a clear ranking
+of personas by discrimination.
+
+\subsection*{Sensitivity and Exploratory Results}
+
+The strength of the evidence depended on annotation
+policy. Under lenient labeling, the overall differences
+in over-refusal and under-refusal were no longer
+significant ($p=.298$ and $p=.068$, respectively).
+Under strict labeling, both remained significant
+($p<.001$ and $p=.009$). The creative writer had the
+highest observed over-refusal rate under all four
+settings, but its rate ranged from 1.6\% under lenient
+labeling to 8.4\% under judge-only labeling.
+Its primary rate was 2.8\%, illustrating the influence
+of annotation decisions on the estimated effect.
+
+The findings were also sensitive to simulated judge
+errors. At a 2\% error rate among responses retaining
+judge labels, the overall over-refusal and under-refusal
+differences remained significant in only 15.0\% and
+37.5\% of simulations, respectively. The evidence for
+persona differences should therefore be interpreted
+cautiously.
+
+Exploratory inspection showed particularly large
+differences on unsafe privacy requests. The neutral
+baseline and tutor each complied with 10 of 25 such
+requests (40\%), compared with 3--5 requests
+(12--20\%) for the other personas. This suggests
+privacy-related requests as a possible source of
+the observed variation, but the pattern was identified
+after inspecting the data and requires further validation.

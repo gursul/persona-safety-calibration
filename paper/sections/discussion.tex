@@ -1,0 +1,55 @@
+\section*{Discussion}
+
+Our findings suggest that persona instructions may change
+how a model responds to safe and unsafe requests, but they
+do not identify a consistently better persona. The neutral
+baseline and children's tutor rarely refused safe requests,
+yet more often complied with unsafe ones. Some professional
+personas showed the opposite tendency. This illustrates why
+refusing more often does not necessarily mean better safety
+calibration. Useful model should distinguish between
+requests that should be answered and the ones that should be
+refused. Although the primary analysis detected overall
+persona differences, no individual role differed significantly
+from the neutral baseline after correction, and conclusions
+depended on annotation choices.
+
+A central finding concerns the difficulty of measuring
+refusal behavior. The revised judge performed well on the
+validation sample, but further review still identified
+mistakes among the responses that directly determine
+over-refusal and under-refusal rates. Persona-specific
+language, such as fictional framing or professional
+disclaimers, can make an answer appear more restrictive
+than it actually is. Consequently, an apparent persona
+effect may partly reflect how the evaluator interprets
+that persona's style. The review procedure helped expose
+this problem, but a small validation sample was insufficient
+to establish reliability across all response types.
+
+Separating deflection from refusal also changed the results. A response that says a request is outside
+its professional scope provides no help, but does not
+necessarily express a safety judgment. Counting such
+responses as safety refusals would mix role adoption
+with safety behavior. Conversely, deflecting an unsafe
+request does not demonstrate that the model recognized
+its harmfulness. Reporting deflection separately therefore
+provides a clearer account of the model's behavior.
+
+Several limitations restrict the conclusions. Later review
+labels came from Claude rather than independent human
+annotators, so corrections may reflect another model's
+interpretation of ambiguous responses. Review also focused
+on judge-identified potential errors; mistakes could remain
+elsewhere despite agreement on the additional comparison
+sample. The experiment used one quantized model, one
+benchmark, and one greedy response per condition.
+The 256-token limit may also have cut off content relevant
+to annotation.
+
+Future work should fix annotation rules before evaluation
+and obtain independent human labels across personas and
+response categories, including apparently correct judge
+decisions. Testing additional models, alternative persona
+wordings, and longer responses would help establish whether
+the observed patterns generalize or new patterns emerge.
