@@ -115,11 +115,11 @@ labeled), **strict** (deflection and close-call compliances count as refusal),
 
 - [x] Repository cleanup: README, requirements, data dictionary, fresh-clone check
 - [x] References verified (`paper/references.bib`); AI usage declaration drafted
-- [ ] Introduction (outline now, final version after the Results)
-- [ ] Methods
-- [ ] Results (compact: one figure, one main table, one sentence per test; details in the appendix)
-- [ ] Discussion and conclusion
-- [ ] Abstract (up to 150 words, with the conclusion)
+- [x] Introduction (outline now, final version after the Results)
+- [x] Methods
+- [x] Results (compact: one figure, one main table, one sentence per test; details in the appendix)
+- [x] Discussion and conclusion
+- [x] Abstract (up to 150 words, with the conclusion)
 - [x] Repository is public: https://github.com/gursul/persona-safety-calibration
-- [ ] Final checks: AI declaration, names and
+- [x] Final checks: AI declaration, names and
       matriculation numbers, project title
