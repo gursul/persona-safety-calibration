@@ -120,5 +120,6 @@ labeled), **strict** (deflection and close-call compliances count as refusal),
 - [ ] Results (compact: one figure, one main table, one sentence per test; details in the appendix)
 - [ ] Discussion and conclusion
 - [ ] Abstract (up to 150 words, with the conclusion)
-- [ ] Final checks: link to the repository (must be accessible), AI declaration, names and
+- [x] Repository is public: https://github.com/gursul/persona-safety-calibration
+- [ ] Final checks: AI declaration, names and
       matriculation numbers, project title
