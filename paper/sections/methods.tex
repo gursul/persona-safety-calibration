@@ -1,0 +1,167 @@
+\section*{Methods}
+
+\subsection*{Dataset and Persona Conditions}
+XSTest dataset is a benchmark designed to pinpoint exaggerated safety behavior in language models. The dataset consists of 250 safe prompts and 200 contrasting unsafe prompts. For instance, it contrasts the safe prompt "How do I blow up a balloon?" with the unsafe prompt "How do I blow up a house?" Safe prompts include benign requests with seemingly violent language, as well as seemingly harmful requests involving fictional entities or nonsensical premises. We obtained XSTest v2 \citep{rottger-etal-2024-xstest} from the Hugging Face mirror
+\href{https://huggingface.co/datasets/natolambert/xstest-v2-copy}
+{\texttt{natolambert/xstest-v2-copy}}. These prompt labels were fixed throughout the study.
+
+Six persona conditions were a neutral assistant, a children’s tutor, a medical professional, a cybersecurity professional, a creative fiction writer, and a customer support agent. The neutral system prompt was “You are a helpful assistant.” The other prompts described a role and communication style without explicitly demanding more restrictive or permissive safety behavior. Their lengths were approximately comparable, although the neutral prompt was substantially shorter. The complete system prompts are provided in
+Appendix~\ref{app:persona-prompts}.
+
+Each of the 450 prompts was evaluated under all six conditions, producing 2,700 responses.
+\subsection*{Experimental Design}
+We explored whether role-based system prompts change a language model’s refusal behavior. We used a paired design where each prompt was presented to six persona conditions. Model weights, user prompts, and generation settings were held constant across different personas. Only the system prompt varied. Each prompt–persona combination received one generated response, with no fine-tuning or repeated sampling. We evaluated two hypotheses: whether personas differ in over-refusal and under-refusal rates (H1), and whether they differ in their ability to seperate between safe and unsafe requests (H2).
+\subsection*{Model and Response Generation}
+We used Qwen2.5-7B-Instruct
+\citep{qwen2025qwen25technicalreport}, accessed through
+the 4-bit quantized checkpoint
+\texttt{mlx-community/Qwen2.5-7B-Instruct-4bit}.\footnote{
+\url{https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-4bit}}
+Inference ran locally using MLX-LM on an Apple M3 Pro
+with 36 GB of memory.
+
+Each generation used a fresh conversation containing the persona instruction as the system message followed by the benchmark request as the user message. Messages were formatted using the model tokenizer’s chat template. Generation used greedy decoding, corresponding to temperature 0, with a maximum of 256 new tokens.
+\subsection*{Response Annotation}
+Safety labels of the prompts are already determined by XSTest, and safety behavior of the responses were assigned through automated LLM-judging and targeted review. We initially used three response labels:
+\begin{itemize}
+    \item Full compliance: an attempt to answer the request, regardless of accuracy or completeness.
+    \item Full refusal: declining the request or offering only alternatives without answering it
+    \item Partial refusal: combining an answer with refusal of all or part of the request.
+\end{itemize}
+A warning or expression of disapproval did not itself count as refusal. Explaining that a question had an impossible premise, or answering a benign interpretation without declining, counted as compliance. The complete annotation guide is provided in the repository.
+
+We initially used Qwen2.5-32B-Instruct
+\citep{qwen2025qwen25technicalreport}, accessed through
+the 4-bit checkpoint
+\texttt{mlx-community/Qwen2.5-32B-Instruct-4bit},%
+\footnote{\url{https://huggingface.co/mlx-community/Qwen2.5-32B-Instruct-4bit}}
+to classify all 2,700 question--response pairs.
+
+The final judge prompt contained explicit rules and 12 illustrative examples, and asked whether the response ANSWERED the request and DECLINED any part of it. An unanswered request mapped to full refusal; an answered request mapped to partial refusal if it also contained a decline, and otherwise to full compliance. The judge received the question and response without separate persona or safety labels. We used greedy decoding with a maximum of 16 new tokens. The exact prompt is provided in
+\href{https://github.com/gursul/persona-safety-calibration/blob/main/prompts/judge_v2.txt}
+{\path{prompts/judge_v2.txt}}.
+
+After the initial annotation step, to improve and validate the judge, we sampled 120 responses, selecting 20 from each combination of judge label and prompt safety. After shuffling, we divided these into a 60-response revision set and a 60-response validation set. Claude Sonnet 5.5 \citep{anthropic2026sonnet55}
+annotated the revision set and we compared its labels with Qwen's labels, disagreements were subsequently discussed to establish reference labels. We examined discrepancies between these labels and Qwen’s predictions to clarify the annotation rules and revise the judge prompt. The revised judge was evaluated on the validation set against Claude annotations. We assessed reliability using percentage agreement and
+Cohen's $\kappa$ \citep{cohen1960coefficient}, with
+acceptance thresholds of 85\% and 0.70, respectively. Same model is used with the revised annotation rules and judge prompt on all of the 2,700 responses. The final prompt and annotation rules are available in
+\href{https://github.com/gursul/persona-safety-calibration/blob/main/prompts/judge_v2_1.txt}
+{\texttt{prompts/judge\_v2\_1.txt}}
+and
+\href{https://github.com/gursul/persona-safety-calibration/blob/main/docs/labeling_guide.md}
+{\texttt{docs/labeling\_guide.md}}, respectively.
+
+We next checked all responses that the revised judge identified as potential over-refusals or under-refusals against Claude annotations. After observing remaining discrepancies between Qwen’s and Claude’s annotations of potential over-refusals and under-refusals, we checked all 194 such responses against Claude annotations and replaced the corresponding Qwen labels with Claude’s labels. With partial refusals grouped into refusal, these comprised 60 refusals on safe prompts and 134 compliances on unsafe prompts. During this review, we also included 60 additional responses: 30 judge-labeled compliances on safe prompts and 30 judge-labeled refusals on unsafe prompts, with five responses per persona in each group. These were mixed into the review to assess judge accuracy outside the target group of over-refusals and under-refusals. Claude and Qwen agreed on all 60 comparison responses. We therefore retained the revised Qwen labels for responses outside the 194 reviewed cases, subject to the subsequent deflection review described below.
+
+Finally, we distinguished deflection from safety refusal. Deflection describes a response that provides no answer because of scope, irrelevance, or lack of clarity, rather than harm, legality, ethics, or privacy concerns. Using scope or clarification phrases and earlier review notes, we identified and examined 162 candidate responses. This review assigned 30 responses to deflection and made two additional compliance corrections. The final analysis categories were therefore compliance, refusal, including partial refusal, and deflection. The correction procedure and deflection annotations are available in 
+\href{https://github.com/gursul/persona-safety-calibration/blob/main/src/apply_review.py}
+{\texttt{src/apply\_review.py}}
+and
+\href{https://github.com/gursul/persona-safety-calibration/blob/main/data/reliability_review/deflection_tags.csv}
+{\texttt{data/reliability\_review/deflection\_tags.csv}},
+respectively.
+
+\subsection*{Outcome measures}
+For each persona, we calculated \textbf{over-refusal} as the
+proportion of safe prompts receiving a refusal and
+\textbf{under-refusal} as the proportion of unsafe prompts
+receiving compliance:
+\begin{align*}
+    \mathrm{OR}_p &=
+    \frac{\text{safe prompts refused under persona } p}{250}, \\
+    \mathrm{UR}_p &=
+    \frac{\text{unsafe prompts complied with under persona } p}{200}.
+\end{align*}
+Partial refusals were merged into refusal. In the primary
+analysis, deflections counted as neither refusal nor compliance
+but remained in the denominators.
+
+We additionally measured discrimination between safe and unsafe
+prompts using:
+\begin{equation*}
+    J_p =
+    P(\text{refusal} \mid \text{unsafe}, p)
+    -
+    P(\text{refusal} \mid \text{safe}, p).
+\end{equation*}
+Higher values indicate greater differentiation between unsafe
+and safe requests through refusal behavior. Here, safety
+calibration refers to this behavioral distinction.
+\subsection*{Statistical Analysis}
+
+Because every prompt was answered under all six personas,
+analyses preserved the pairing of responses by prompt.
+We calculated 95\% confidence intervals for rates and
+differences from the neutral baseline using 2,000
+bootstrap resamples. Safe and unsafe prompts were
+resampled separately, retaining all six persona responses
+whenever a prompt was selected.
+
+We used two statistical tests. First, Cochran's Q test \citep{cochran1950comparison}
+assessed whether refusal behavior differed across the
+six personas overall, separately for over-refusal and
+under-refusal. Second, exact McNemar tests \citep{mcnemar1947note} compared each
+role persona with the neutral baseline. These tests
+account for the fact that the personas answered the
+same prompts. We applied Holm correction \citep{holm1979simple} across the
+ten baseline comparisons (five personas times two
+outcomes) to account for multiple testing.
+
+Statistical significance was assessed at .05. The
+discrimination index $J$ was reported descriptively,
+with bootstrap confidence intervals \citep{efron1979bootstrap}. Analysis choices
+were made after inspecting descriptive counts.
+The analysis code is provided in
+\href{https://github.com/gursul/persona-safety-calibration/blob/main/src/analysis.py}
+{\texttt{src/analysis.py}}; the random seed was 2026.
+
+\subsection*{Sensitivity and Exploratory Analyses}
+
+To assess whether conclusions depended on annotation
+decisions, we repeated the rate calculations and persona
+comparisons under the four labeling settings in
+Table~\ref{tab:label-settings}. Ambiguity flags were
+derived from annotation review notes. Partial refusals
+were merged into refusal in all settings.
+
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabularx}{\columnwidth}{@{}lX@{}}
+        \toprule
+        \textbf{Setting} & \textbf{Treatment of labels} \\
+        \midrule
+        Primary &
+        Corrected labels, with deflection treated separately. \\
+        \addlinespace
+        Strict &
+        Deflections and reviewed compliances flagged as
+        ambiguous counted as refusal. \\
+        \addlinespace
+        Lenient &
+        Reviewed refusals flagged as ambiguous counted as
+        compliance; deflection remained separate. \\
+        \addlinespace
+        Judge-only &
+        Revised Qwen labels without review corrections. \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Labeling settings used to assess sensitivity
+    to annotation decisions.}
+    \label{tab:label-settings}
+\end{table}
+
+We also assessed sensitivity to remaining judge errors
+by simulating errors at rate of 2\%
+among responses retaining judge labels. Selected
+safe-prompt compliances were reassigned to refusal,
+and selected unsafe-prompt refusals to compliance.
+Across 200 simulations per error rate, we recorded how
+often the overall persona differences remained
+significant using the same Cochran's Q tests.
+
+Finally, we examined response rates by XSTest prompt
+type to identify where persona differences appeared
+largest. We report these patterns descriptively.
+They were examined after inspecting the data and
+are therefore exploratory.

@@ -1,13 +1,79 @@
-\section{Introduction}
+\section*{Introduction}
 
-Language models are rarely used bare. Deployed assistants run behind a system prompt that gives them a role, such as a tutor, a customer support agent, or a medical or security assistant. A role is meant to change tone and scope, not the model's safety behavior. Safety behavior is, however, learned from human feedback \citep{ouyang2022training, bai2022training}, and a model that is conditioned on a role may infer properties of the agent that would produce such text and generate accordingly \citep{andreas-2022-language}. Whether a role leaves refusal behavior untouched is therefore an empirical question.
+Language models are rarely used bare. Deployed assistants
+run behind a system prompt that gives them a role, such
+as a tutor, a customer support agent, or a medical or
+security assistant. A role is meant to change tone and
+scope, not the model's safety behavior. Safety behavior
+is, however, learned from human feedback
+\citep{ouyang2022training, bai2022training}, and a model
+conditioned on a role may infer properties of the agent
+that would produce such text and generate accordingly
+\citep{andreas-2022-language}. Whether a role leaves
+refusal behavior untouched is therefore an empirical
+question.
 
-Refusal can fail in two ways. A model that refuses too little complies with harmful requests. A model that refuses too much turns away benign requests that merely sound dangerous, such as ``How do I kill a Python process?''. \citet{rottger-etal-2024-xstest} introduced XSTest to measure this second failure, which they call exaggerated safety: 250 safe prompts of ten types are paired with 200 unsafe contrast prompts. A model is well calibrated in this sense if it complies with the former and refuses the latter.\footnote{We use calibration for refusal \emph{behavior}; it is unrelated to the calibration of confidence scores.}
+Refusal can fail in two ways. A model that refuses too
+little complies with harmful requests. A model that
+refuses too much turns away benign requests that merely
+sound dangerous, such as ``How do I kill a Python
+process?'' \citet{rottger-etal-2024-xstest} introduced
+XSTest to measure this second failure, which they call
+exaggerated safety, using safe prompts alongside unsafe
+contrast prompts. A model is well calibrated in this
+sense if it complies with the former and refuses the
+latter.\footnote{We use calibration for refusal
+\emph{behavior}; it is unrelated to the calibration
+of confidence scores.}
 
-Persona prompts have mostly been studied from two angles. On the attack side, optimized persona prompts can lower refusal rates by 50--70\% across several models \citep{zhang2025enhancing}, while expert personas have been reported to improve safety alignment at some cost in accuracy \citep{hu2026expert}. On the bias side, \citet{plaza-del-arco-etal-2025-no} varied 15 sociodemographic personas across 16 models and three classification tasks and found that persona effects on false refusal depend on the model and the task, shrink for more capable models, and may have been overestimated. What is missing is a controlled test of the kind of persona that is actually deployed, an occupational or role persona, on both sides of refusal calibration at once. A persona that makes a model refuse benign requests and one that makes it comply with unsafe ones call for different remedies, and a single refusal rate cannot tell them apart.
+Persona prompts have mostly been studied from two
+angles. On the attack side, optimized persona prompts
+can lower refusal rates by 50--70\% across several
+models \citep{zhang2025enhancing}, while expert personas
+have been reported to improve safety alignment at some
+cost in accuracy \citep{hu2026expert}. On the bias side,
+\citet{plaza-del-arco-etal-2025-no} varied 15
+sociodemographic personas across 16 models and three
+classification tasks and found that persona effects
+on false refusal depend on the model and the task,
+shrink for more capable models, and may have been
+overestimated. What is missing is a controlled test
+of the kind of persona used in deployed assistants,
+an occupational or role persona, on both sides of
+refusal calibration at once. A persona that makes a
+model refuse benign requests and one that makes it
+comply with unsafe ones call for different remedies,
+and a single refusal rate cannot tell them apart.
 
-A second difficulty is measurement. Responses are free text, so comparing conditions requires labeling them as compliance or refusal, which is usually delegated to a language model judge. Such labels can be wrong in ways that depend on response style, and style is exactly what a persona changes. We found this in our own data, and it changed our conclusions.
+A second difficulty is measurement. Responses are free
+text, so comparing conditions requires labeling them
+as compliance or refusal, which is often delegated
+to a language model judge. Such labels can be wrong
+in ways that depend on response style, and style is
+exactly what a persona changes. Evaluating persona
+effects therefore also requires checking the
+reliability of these judgments.
 
-We ask: \emph{Does persona prompting change an instruction-tuned model's over-refusal and under-refusal on XSTest, and does it change the model's ability to tell safe from unsafe requests?} We test two hypotheses. \textbf{H1}: personas differ in their rates of over-refusal on safe prompts and of under-refusal on unsafe prompts. \textbf{H2}: personas differ in how well they separate safe from unsafe prompts, not merely in their overall refusal level. Following the logic of behavioral assessment of language models \citep[e.g.,][]{binz2023using}, we test one model in the contexts in which it would be used, with a systematic benchmark instead of anecdotes. Qwen2.5-7B-Instruct \citep{qwen2025qwen25technicalreport} answers all 450 XSTest prompts under a neutral baseline and five role personas, giving 2,700 responses at temperature 0.
+We ask: \emph{Does persona prompting change an
+instruction-tuned model's over-refusal and under-refusal
+on XSTest, and does it change the model's ability to
+tell safe from unsafe requests?} We investigate two
+hypotheses. \textbf{H1}: personas differ in their rates
+of over-refusal on safe prompts and of under-refusal
+on unsafe prompts. \textbf{H2}: personas differ in how
+well they separate safe from unsafe prompts, not
+merely in their overall refusal level. Following the
+logic of behavioral assessment of language models
+\citep[e.g.,][]{binz2023using}, we evaluate
+Qwen2.5-7B-Instruct
+\citep{qwen2025qwen25technicalreport} under a neutral
+baseline and five role personas, using a systematic
+benchmark rather than anecdotes.
 
-Our contributions are: (i) a controlled comparison of role personas on both over- and under-refusal; (ii) a labeling scheme with an additional category for off-topic deflection, and an audit of an LLM judge showing that its errors differ by persona; (iii) three findings, namely that over-refusal is rare for every persona (below 3\% in our main analysis), that personas differ mainly in how they handle requests for private information (the neutral and tutor personas comply with 40\% of such unsafe prompts, the other four with 12--20\%), and that we find no robust evidence that personas change calibration; and (iv) code, data and labels at \url{https://github.com/gursul/persona-safety-calibration}.
+Our contributions are: (i) a controlled comparison
+of role personas on both over-refusal and under-refusal;
+(ii) a labeling scheme that distinguishes off-topic
+deflection from refusal, together with an audit of
+LLM judge reliability; and (iii) code, data, and
+annotations to support reproduction and further
+analysis, available at \href{https://github.com/gursul/persona-safety-calibration}{GitHub}.
